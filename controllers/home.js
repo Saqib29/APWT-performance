@@ -5,7 +5,7 @@ router.get('/', (req, res)=>{
 	// console.log(req.session.password);
 	// console.log(req.session.username);
 	// console.log(req.session.users.length);
-	if(req.cookies['uname'] != null){
+	if(req.cookies['uname'] == req.session.username){
 		res.render('home/index', {name: req.session.username, id:'123'});		
 	}else{
 		res.redirect('/login');

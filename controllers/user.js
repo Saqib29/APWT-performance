@@ -30,14 +30,24 @@ router.get('/edit/:id', (req, res)=>{
 
 	//res.send(req.params.id + "<br>"+ req.params.name);
 	
-	if(req.cookies['uname'] != ""){
+	if(req.cookies['uname'] == req.session.username){
+		
+		
+		var index_of = 0;
+		for(var i=0, j=0; i<req.session.users.length; i++){
+			if(req.params.id == req.session.users[i][0]){
+				index_of = i;
+				// console.log(index_of);
+			}
+		}
+		
 		
 		var user = {
-			username: 'test',
-			password: 'test',
-			email: 'alamin@aiub.edu'
+			username: req.session.users[index_of][1],
+			password: req.session.users[index_of][2],
+			email:  req.session.users[index_of][3]
 		};
-
+		
 		res.render('user/edit', user);
 	}else{
 		res.redirect('/login');
@@ -46,8 +56,16 @@ router.get('/edit/:id', (req, res)=>{
 
 router.post('/edit/:id', (req, res)=>{
 	
-	if(req.cookies['uname'] != ""){
+	if(req.cookies['uname'] == req.session.username){
 		//res.send('updated');
+		var index_of = 0;
+		for(var i=0, j=0; i<req.session.users.length; i++){
+			if(req.params.id == req.session.users[i][0]){
+				index_of = i;
+				
+			}
+		}
+		req.session.users[index_of] = [req.params.id, req.body.username, req.body.password, req.body.email];
 		res.redirect('/home/userlist');
 	}else{
 		res.redirect('/login');
