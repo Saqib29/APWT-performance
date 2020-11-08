@@ -2,9 +2,10 @@ const express 	= require('express');
 const router 	= express.Router();
 
 router.get('/', (req, res)=>{
-	
+	// console.log(req.session.password);
+	// console.log(req.session.username)
 	if(req.cookies['uname'] != null){
-		res.render('home/index', {name: 'alamin', id:'123'});		
+		res.render('home/index', {name: req.session.username, id:'123'});		
 	}else{
 		res.redirect('/login');
 	}
@@ -15,13 +16,7 @@ router.get('/userlist', (req, res)=>{
 
 	if(req.cookies['uname'] != ""){
 
-		var students = [
-			['1', 'alamin', 'abc@gmail.com', '1243'],
-			['2', 'pqr', 'pqr@gmail.com', '1243'],
-			['3', 'xyz', 'xyz@gmail.com', '1243']
-		];
-
-		res.render('home/userlist', {users: students});		
+		res.render('home/userlist', {users: req.session.users});		
 	}else{
 		res.redirect('/login');
 	}
