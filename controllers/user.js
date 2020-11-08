@@ -3,7 +3,7 @@ const router 	= express.Router();
 
 router.get('/create', (req, res)=>{
 	
-	if(req.cookies['uname'] != ""){
+	if(req.cookies['uname'] == req.session.username){
 		res.render('user/create');
 	}else{
 		res.redirect('/login');
@@ -12,13 +12,10 @@ router.get('/create', (req, res)=>{
 
 router.post('/create', (req, res)=>{
 	
-	if(req.cookies['uname'] != ""){
-		
-		/*var user = [req.body.uname, req.body.password, req.body.email];
-		var newlist = req.session.userlist;
-		newlist.push(user);
-		req.session.userlist = newlist;*/
-		
+	if(req.cookies['uname'] == req.session.username){
+	
+		req.session.users.push([req.session.users.length, req.body.username, req.body.password, req.body.email]);
+		// console.log(req.session.users);
 		res.send('New user info:'+
 					"<br> Username: "+req.body.username+
 					"<br> Password: "+req.body.password+
