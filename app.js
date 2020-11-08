@@ -14,7 +14,7 @@ const port				= 3000;
 app.set('view engine', 'ejs');
 
 //middleware
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(exSession({secret: 'secret value', saveUninitialized: true, resave: false}));
 
